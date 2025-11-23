@@ -1,17 +1,7 @@
-import axios from "axios";
+// src/api/auth.js
+import axiosInstance from "./axiosInstance";
 
-const API_URL = "http://localhost:8081/api/auth";
-
-export const register = async (data) => {
-    return axios.post(`${API_URL}/register`, data);
-};
-
-export const login = async (data) => {
-    return axios.post(`${API_URL}/login`, data);
-};
-
-export const getHome = async (token) => {
-    return axios.get(`${API_URL}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-};
+export const register = (data) => axiosInstance.post("/auth/register", data);
+export const login = (data) => axiosInstance.post("/auth/login", data);
+export const employerLogin = (data) => axiosInstance.post("/auth/employer-login", data);
+export const me = () => axiosInstance.get("/auth/me");
