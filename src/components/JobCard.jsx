@@ -1,14 +1,29 @@
 // src/components/JobCard.jsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { applyJobHandle } from "../api/jobs";
 
 export default function JobCard({ job }) {
     const { user } = useAuth();
+    const [applying, setApplying] = useState(false)
 
     if (!job) return null;
 
     const isEmployer = user?.role === "EMPLOYER";
     const isCandidate = user?.role === "CANDIDATE";
+
+    const handleApplyMain = async () => {
+        setApplying(true);
+        console.log(job.id)
+        try {
+            await applyJobHandle(job.id);
+            toast.success("Applied successfully");
+        } catch {
+            toast.error("Apply failed");
+        } finally { setApplying(false); }
+    };
 
     return (
         <div className="job-card border rounded p-4 shadow-sm bg-white">
@@ -31,8 +46,8 @@ export default function JobCard({ job }) {
 
                 {/* Candidate sees Apply button */}
                 {isCandidate && (
-                    <button className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
-                        Apply
+                    <button onClick={handleApplyMain} disabled={applying} className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
+                        {applying ? "Applying..." : "Apply Now"}
                     </button>
                 )}
 

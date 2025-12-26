@@ -70,11 +70,11 @@ export default function Navbar() {
                                 <span className="text-gray-700 font-semibold">
                                     {user?.name || user?.email || "Profile"}
                                 </span>
-
-                                <Link to="/create-job" className="px-4 py-2 bg-blue-600 text-white rounded-md">
-                                    Post a Job
-                                </Link>
-
+                                {user?.role !== "CANDIDATE" && (
+                                    <Link to="/create-job" className="px-4 py-2 bg-blue-600 text-white rounded-md">
+                                        Post a Job
+                                    </Link>
+                                )}
                                 <Link to="/profile" className="p-2 rounded-full hover:bg-gray-100">
                                     <UserCircle size={26} />
                                 </Link>

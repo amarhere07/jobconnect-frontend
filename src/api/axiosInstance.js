@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
         // example: if 401 -> clear token and redirect to login
         if (err?.response?.status === 401) {
             localStorage.removeItem("token");
-            // optional: window.location.href = "/login";
+            window.location.href = "/login";
         }
         return Promise.reject(err);
     }

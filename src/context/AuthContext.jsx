@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode"; // ✅ FIXED
-
+import { jwtDecode } from "jwt-decode";
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
@@ -13,11 +12,11 @@ export default function AuthProvider({ children }) {
 
         if (token) {
             try {
-                const decoded = jwtDecode(token); // ✅ Now works
+                const decoded = jwtDecode(token);
 
                 setUser({
                     email: decoded.sub,
-                    role: decoded.role, // backend includes role
+                    role: decoded.role,
                 });
             } catch (err) {
                 console.error("Invalid Token");

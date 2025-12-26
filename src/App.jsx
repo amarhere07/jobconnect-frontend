@@ -12,13 +12,41 @@ import { Toaster } from "react-hot-toast";
 import EmployerDashboard from "./pages/EmployerDashboard";
 import CandidateDashboard from "./pages/CandidateDashboard";
 import Profile from "./pages/Profile";
+import { useAuth } from "./context/AuthContext";
+
+
+function RoleBasedHome() {
+  const { user } = useAuth();
+
+  if (!user) return null;
+
+  if (user.role === "EMPLOYER") {
+    return <EmployerDashboard />;
+  }
+
+  if (user.role === "CANDIDATE") {
+    return <Home />;
+  }
+
+  return null;
+}
+
 
 export default function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <RoleBasedHome />
+            </ProtectedRoute>
+          }
+        />
+
+
         <Route path="/jobs/:id" element={
           <ProtectedRoute role="EMPLOYER">
             <JobDetails />

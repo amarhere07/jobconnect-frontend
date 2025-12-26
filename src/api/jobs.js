@@ -1,4 +1,5 @@
 // src/api/jobs.js
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 export const getAllJobs = (params = {}) =>
@@ -10,6 +11,9 @@ export const createJob = (payload) => axiosInstance.post("/jobs/create-job", pay
 
 export const applyJob = (jobId, payload) =>
     axiosInstance.post(`/jobs/${jobId}/apply`, payload);
+
+export const applyJobHandle = (jobId) =>
+    axiosInstance.post(`/applications/apply/${jobId}`);
 
 export const toggleSaveJob = (jobId) =>
     axiosInstance.post(`/jobs/${jobId}/save`);
